@@ -13,6 +13,7 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ar_SA">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="إدارة الديون">
     <meta name="format-detection" content="telephone=no">
@@ -82,7 +83,7 @@
                 <span>الأرشيف</span>
             </a>
             <a href="#debtors-list" class="tab-btn" data-view="debtors-list" data-route="debtors-list" role="tab" aria-selected="false">
-                <i data-lucide="list-users"></i>
+                <i data-lucide="users"></i>
                 <span>المديونين</span>
             </a>
         </nav>
@@ -464,7 +465,7 @@
             <section class="debtors-list-section">
                 <div class="debtors-list-header">
                     <div>
-                        <h2><i data-lucide="list-users"></i> قائمة المديونين</h2>
+                        <h2><i data-lucide="users"></i> قائمة المديونين</h2>
                         <p>جميع المديونين مع أرقام هواتفهم ومواعيد الاتصال المتبادلة</p>
                     </div>
                     <div class="debtors-list-stats" id="debtorsListStats"></div>
@@ -658,11 +659,11 @@
                         </div>
                     </div>
                     <div class="settings-pane" data-pane="security">
-                        <div class="form-group">
-                            <label for="userName"><i data-lucide="user"></i> اسم المستخدم / الشركة</label>
-                            <input type="text" id="userName" placeholder="اسمك أو اسم نشاطك التجاري">
-                        </div>
-                        <div class="form-group">
+                        <form id="securityForm" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="userName"><i data-lucide="user"></i> اسم المستخدم / الشركة</label>
+                                <input type="text" id="userName" placeholder="اسمك أو اسم نشاطك التجاري">
+                            </div>
                             <label class="switch-label">
                                 <input type="checkbox" id="enablePassword">
                                 <span class="switch-slider"></span>
@@ -686,6 +687,7 @@
                                 <span>تشفير البيانات المخزنة</span>
                             </label>
                         </div>
+                        </form>
                         <button class="btn-danger" id="clearAllDataBtn">
                             <i data-lucide="trash-2"></i>
                             مسح جميع البيانات نهائياً
@@ -1279,18 +1281,20 @@
             <div class="lock-icon"><i data-lucide="lock"></i></div>
             <h2>التطبيق مقفل</h2>
             <p>أدخل كلمة المرور للمتابعة</p>
-            <div class="form-group">
-                <div class="password-input-wrapper">
-                    <input type="password" id="lockPassword" placeholder="كلمة المرور">
-                    <button type="button" class="btn-icon-sm" id="toggleLockPassword" aria-label="إظهار">
-                        <i data-lucide="eye"></i>
-                    </button>
+            <form id="lockForm" onsubmit="return false;">
+                <div class="form-group">
+                    <div class="password-input-wrapper">
+                        <input type="password" id="lockPassword" placeholder="كلمة المرور" autocomplete="current-password">
+                        <button type="button" class="btn-icon-sm" id="toggleLockPassword" aria-label="إظهار">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <button class="btn-primary" id="unlockBtn">
-                <i data-lucide="unlock"></i>
-                فتح التطبيق
-            </button>
+                <button type="submit" class="btn-primary" id="unlockBtn">
+                    <i data-lucide="unlock"></i>
+                    فتح التطبيق
+                </button>
+            </form>
             <p class="lock-error" id="lockError" hidden>كلمة المرور غير صحيحة</p>
         </div>
     </div>
