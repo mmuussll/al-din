@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="description" content="تطبيق احترافي لإدارة وتتبع الديون المستحقة لك - يعمل بدون إنترنت مع تخزين محلي آمن">
+    <meta name="keywords" content="إدارة الديون, تتبع الديون, المديونين, السدادات, تطبيق ديون, إدارة مالية">
+    <meta name="author" content="إدارة الديون Pro">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="إدارة الديون - تتبع الديون المستحقة لك">
+    <meta property="og:description" content="تطبيق احترافي لإدارة وتتبع الديون المستحقة لك">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_SA">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="إدارة الديون">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%236366f1'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial'%3E%24%3C/text%3E%3C/svg%3E">
+    <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%236366f1'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white' font-family='Arial'%3E%24%3C/text%3E%3C/svg%3E">
+    <title>إدارة الديون - تتبع الديون المستحقة لك</title>
+
+    <link rel="manifest" href="manifest.json">
+    <link rel="preload" href="libs/lucide.min.js" as="script">
+    <link rel="preload" href="libs/chart.umd.min.js" as="script">
+
+    <script src="libs/lucide.min.js" defer></script>
+    <script src="libs/chart.umd.min.js" defer></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-features.css">
+</head>
+<body>
+    <a href="#view-dashboard" class="skip-link">انتقل للمحتوى الرئيسي</a>
+    <!-- ==================== شريط التنقل العلوي ==================== -->
+    <header class="topbar" role="banner">
+        <div class="topbar-content">
+            <div class="logo" id="logoBtn" role="button" tabindex="0" aria-label="العودة للرئيسية">
+                <i data-lucide="wallet" aria-hidden="true"></i>
+                <h1>إدارة الديون</h1>
+                <span class="version-badge">Pro</span>
+            </div>
+            <div class="topbar-actions" role="toolbar" aria-label="إجراءات سريعة">
+                <button class="btn-icon" id="notificationsBtn" title="التنبيهات" aria-label="التنبيهات" aria-haspopup="true">
+                    <i data-lucide="bell" aria-hidden="true"></i>
+                    <span class="notification-badge" id="notificationBadge" hidden aria-live="polite">0</span>
+                </button>
+                <button class="btn-icon" id="settingsBtn" title="الإعدادات" aria-label="الإعدادات">
+                    <i data-lucide="settings" aria-hidden="true"></i>
+                </button>
+                <button class="btn-icon" id="themeToggle" title="تبديل الوضع" aria-label="تبديل الوضع بين الفاتح والداكن">
+                    <i data-lucide="moon" aria-hidden="true"></i>
+                </button>
+                <button class="btn-icon" id="exportJsonBtn" title="تصدير JSON" aria-label="تصدير البيانات بصيغة JSON">
+                    <i data-lucide="file-json" aria-hidden="true"></i>
+                </button>
+                <button class="btn-icon" id="exportExcelBtn" title="تصدير Excel" aria-label="تصدير البيانات بصيغة Excel">
+                    <i data-lucide="file-spreadsheet" aria-hidden="true"></i>
+                </button>
+                <button class="btn-icon" id="importAllBtn" title="استيراد البيانات" aria-label="استيراد البيانات من ملف">
+                    <i data-lucide="upload" aria-hidden="true"></i>
+                </button>
+                <input type="file" id="importFileInput" accept=".json,.xlsx,.xls" hidden aria-hidden="true">
+            </div>
+        </div>
+        <nav class="tabs-nav" role="tablist">
+            <a href="#dashboard" class="tab-btn active" data-view="dashboard" data-route="dashboard" role="tab" aria-selected="true">
+                <i data-lucide="layout-dashboard"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#analytics" class="tab-btn" data-view="analytics" data-route="analytics" role="tab" aria-selected="false">
+                <i data-lucide="bar-chart-3"></i>
+                <span>التحليلات</span>
+            </a>
+            <a href="#reports" class="tab-btn" data-view="reports" data-route="reports" role="tab" aria-selected="false">
+                <i data-lucide="file-bar-chart"></i>
+                <span>التقارير</span>
+            </a>
+            <a href="#archive" class="tab-btn" data-view="archive" data-route="archive" role="tab" aria-selected="false">
+                <i data-lucide="archive"></i>
+                <span>الأرشيف</span>
+            </a>
+            <a href="#debtors-list" class="tab-btn" data-view="debtors-list" data-route="debtors-list" role="tab" aria-selected="false">
+                <i data-lucide="list-users"></i>
+                <span>المديونين</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- ==================== لوحة التنبيهات ==================== -->
+    <div class="notifications-panel" id="notificationsPanel" hidden>
+        <div class="notifications-header">
+            <h3><i data-lucide="bell"></i> التنبيهات</h3>
+            <button class="btn-icon-sm" id="clearNotificationsBtn" title="مسح الكل">
+                <i data-lucide="trash-2"></i>
+            </button>
+        </div>
+        <div class="notifications-list" id="notificationsList"></div>
+    </div>
+
+    <!-- ==================== المحتوى الرئيسي ==================== -->
+    <main class="container">
+        <!-- ============== عرض لوحة التحكم ============== -->
+        <div class="view-container active" id="view-dashboard" role="tabpanel">
+            <!-- بطاقات الإحصائيات -->
+            <section class="stats-grid">
+                <div class="stat-card stat-total" data-stat="total">
+                    <div class="stat-icon"><i data-lucide="dollar-sign"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">إجمالي المبالغ المطلوبة</span>
+                        <span class="stat-value" id="statTotal">0</span>
+                        <span class="stat-currency" id="statCurrencyTotal">ريال</span>
+                    </div>
+                    <div class="stat-trend" id="statTrendTotal"></div>
+                </div>
+                <div class="stat-card stat-paid" data-stat="paid">
+                    <div class="stat-icon"><i data-lucide="check-circle"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">المبالغ المسددة</span>
+                        <span class="stat-value" id="statPaid">0</span>
+                        <span class="stat-currency" id="statCurrencyPaid">ريال</span>
+                    </div>
+                    <div class="stat-trend" id="statTrendPaid"></div>
+                </div>
+                <div class="stat-card stat-remaining" data-stat="remaining">
+                    <div class="stat-icon"><i data-lucide="clock"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">المبالغ المتبقية</span>
+                        <span class="stat-value" id="statRemaining">0</span>
+                        <span class="stat-currency" id="statCurrencyRemaining">ريال</span>
+                    </div>
+                    <div class="stat-trend" id="statTrendRemaining"></div>
+                </div>
+                <div class="stat-card stat-debtors" data-stat="debtors">
+                    <div class="stat-icon"><i data-lucide="users"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">عدد المديونين</span>
+                        <span class="stat-value" id="statDebtors">0</span>
+                        <span class="stat-currency">شخص</span>
+                    </div>
+                    <div class="stat-trend" id="statTrendDebtors"></div>
+                </div>
+                <div class="stat-card stat-overdue" data-stat="overdue">
+                    <div class="stat-icon"><i data-lucide="alert-triangle"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">الديون المتأخرة</span>
+                        <span class="stat-value" id="statOverdue">0</span>
+                        <span class="stat-currency">دين</span>
+                    </div>
+                    <div class="stat-trend" id="statTrendOverdue"></div>
+                </div>
+            </section>
+
+            <!-- نسبة التحصيل + الرسم البياني -->
+            <section class="dashboard-row">
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="pie-chart"></i> نسبة التحصيل</h2>
+                        <div class="chart-period" id="chartPeriod">
+                            <button class="period-btn active" data-period="all">الكل</button>
+                            <button class="period-btn" data-period="month">الشهر</button>
+                            <button class="period-btn" data-period="year">السنة</button>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="collectionChart"></canvas>
+                    </div>
+                </div>
+                <div class="card progress-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="trending-up"></i> التقدم</h2>
+                    </div>
+                    <div class="progress-info">
+                        <div class="progress-circle">
+                            <svg viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="var(--primary)" />
+                                        <stop offset="100%" stop-color="var(--info)" />
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="42" class="progress-bg"></circle>
+                                <circle cx="50" cy="50" r="42" class="progress-fill" id="progressCircle"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <span id="progressPercent">0%</span>
+                                <small>نسبة التحصيل</small>
+                            </div>
+                        </div>
+                        <div class="progress-details">
+                            <div class="progress-detail-item">
+                                <span class="dot dot-paid"></span>
+                                <span>تم تحصيل <strong id="progressPaid">0</strong> <span class="currency-suffix"></span></span>
+                            </div>
+                            <div class="progress-detail-item">
+                                <span class="dot dot-remaining"></span>
+                                <span>متبقي <strong id="progressRemaining">0</strong> <span class="currency-suffix"></span></span>
+                            </div>
+                            <div class="progress-detail-item">
+                                <span class="dot dot-rate"></span>
+                                <span>متوسط الدين <strong id="progressAvg">0</strong> <span class="currency-suffix"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الأهداف -->
+            <section class="goals-section" id="goalsContainer"></section>
+
+            <!-- مقارنة الفترات -->
+            <section class="card">
+                <div class="card-header">
+                    <h2><i data-lucide="git-compare"></i> مقارنة الفترات</h2>
+                </div>
+                <div id="periodComparison"></div>
+            </section>
+
+            <!-- أدوات التحكم -->
+            <section class="controls-bar">
+                <div class="search-box">
+                    <i data-lucide="search"></i>
+                    <input type="text" id="searchInput" placeholder="ابحث باسم المديون أو رقم الهاتف أو الوصف..." aria-label="بحث">
+                    <button class="clear-search" id="clearSearchBtn" hidden aria-label="مسح البحث">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div class="filter-tabs" id="filterTabs" role="tablist">
+                    <button class="filter-tab active" data-filter="all">الكل</button>
+                    <button class="filter-tab" data-filter="active">ديون قائمة</button>
+                    <button class="filter-tab" data-filter="overdue">ديون متأخرة</button>
+                    <button class="filter-tab" data-filter="paid">ديون مسددة</button>
+                    <button class="filter-tab" data-filter="due-soon">قريبة الاستحقاق</button>
+                </div>
+                <div class="sort-box">
+                    <select id="sortSelect" aria-label="ترتيب">
+                        <option value="newest">الأحدث أولاً</option>
+                        <option value="oldest">الأقدم أولاً</option>
+                        <option value="name-asc">الاسم (أ-ي)</option>
+                        <option value="name-desc">الاسم (ي-أ)</option>
+                        <option value="amount-desc">المبلغ (الأكبر)</option>
+                        <option value="amount-asc">المبلغ (الأصغر)</option>
+                        <option value="remaining-desc">المتبقي (الأكبر)</option>
+                        <option value="remaining-asc">المتبقي (الأصغر)</option>
+                        <option value="trust-desc">درجة الثقة (الأعلى)</option>
+                        <option value="trust-asc">درجة الثقة (الأقل)</option>
+                    </select>
+                </div>
+                <button class="btn-primary" id="addDebtorBtn">
+                    <i data-lucide="user-plus"></i>
+                    إضافة مديون جديد
+                </button>
+            </section>
+
+            <!-- الفلترة المتقدمة -->
+            <section class="advanced-filters">
+                <details>
+                    <summary><i data-lucide="sliders-horizontal"></i> فلترة متقدمة</summary>
+                    <div class="advanced-filters-content">
+                        <div class="form-group">
+                            <label>التصنيف</label>
+                            <select id="filterCategory">
+                                <option value="all">الكل</option>
+                                <option value="general">عام</option>
+                                <option value="family">عائلة</option>
+                                <option value="friend">صديق</option>
+                                <option value="customer">عميل</option>
+                                <option value="supplier">مورد</option>
+                                <option value="employee">موظف</option>
+                                <option value="other">آخر</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>من مبلغ</label>
+                            <input type="number" id="filterMinAmount" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>إلى مبلغ</label>
+                            <input type="number" id="filterMaxAmount" placeholder="∞" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>من تاريخ</label>
+                            <input type="date" id="filterDateFrom">
+                        </div>
+                        <div class="form-group">
+                            <label>إلى تاريخ</label>
+                            <input type="date" id="filterDateTo">
+                        </div>
+                        <button class="btn-secondary" id="resetFilters"><i data-lucide="refresh-cw"></i> إعادة تعيين</button>
+                    </div>
+                </details>
+            </section>
+
+            <!-- أدوات الإجراءات الجماعية -->
+            <div class="bulk-actions-toolbar" id="bulkActionsToolbar" hidden>
+                <span><strong id="bulkCount">0</strong> مديون محدد</span>
+                <div class="bulk-actions-buttons">
+                    <button class="btn-whatsapp btn-sm" id="bulkWhatsApp"><i data-lucide="message-circle"></i> تذكير جماعي</button>
+                    <button class="btn-warning btn-sm" id="bulkArchive"><i data-lucide="archive"></i> أرشفة</button>
+                    <button class="btn-info btn-sm" id="bulkExport"><i data-lucide="download"></i> تصدير</button>
+                    <button class="btn-secondary btn-sm" id="clearSelection"><i data-lucide="x"></i> إلغاء</button>
+                </div>
+            </div>
+
+            <!-- قائمة المديونين -->
+            <section class="debtors-section">
+                <div class="debtors-grid" id="debtorsGrid"></div>
+                <div class="empty-state" id="emptyState" hidden>
+                    <i data-lucide="inbox"></i>
+                    <h3>لا يوجد مديونون حتى الآن</h3>
+                    <p>ابدأ بإضافة مديون جديد لتتبع الديون المستحقة لك</p>
+                    <button class="btn-primary" id="emptyStateAddBtn">
+                        <i data-lucide="user-plus"></i>
+                        إضافة أول مديون
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============== عرض التحليلات ============== -->
+        <div class="view-container" id="view-analytics" role="tabpanel" hidden>
+            <section class="analytics-grid">
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="calendar"></i> النشاط الشهري</h2>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="pie-chart"></i> توزيع المديونين حسب التصنيف</h2>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="debtorsChart"></canvas>
+                    </div>
+                </div>
+                <div class="card analytics-card analytics-wide">
+                    <div class="card-header">
+                        <h2><i data-lucide="line-chart"></i> تطور التحصيل التراكمي</h2>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="timelineChart"></canvas>
+                    </div>
+                </div>
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="trophy"></i> أعلى المديونين</h2>
+                    </div>
+                    <div class="top-list" id="topDebtorsList"></div>
+                </div>
+                <div class="card analytics-card">
+                    <div class="card-header">
+                        <h2><i data-lucide="clock"></i> الديون القريبة من الاستحقاق</h2>
+                    </div>
+                    <div class="upcoming-list" id="upcomingList"></div>
+                </div>
+                <div class="card analytics-card analytics-wide">
+                    <div class="card-header">
+                        <h2><i data-lucide="target"></i> مؤشرات الأداء (KPIs)</h2>
+                    </div>
+                    <div class="kpi-grid" id="kpiGrid"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============== عرض التقارير ============== -->
+        <div class="view-container" id="view-reports" role="tabpanel" hidden>
+            <section class="reports-grid">
+                <div class="card report-card">
+                    <div class="report-icon"><i data-lucide="file-text"></i></div>
+                    <h3>تقرير شهري</h3>
+                    <p>ملخص الديون والسدادات لشهر محدد</p>
+                    <div class="form-group">
+                        <label for="reportMonth">اختر الشهر</label>
+                        <input type="month" id="reportMonth">
+                    </div>
+                    <button class="btn-primary" id="generateMonthlyReport">
+                        <i data-lucide="download"></i>
+                        إنشاء التقرير
+                    </button>
+                </div>
+                <div class="card report-card">
+                    <div class="report-icon"><i data-lucide="users"></i></div>
+                    <h3>كشف حساب مديون</h3>
+                    <p>تقرير مفصل لمديون محدد</p>
+                    <div class="form-group">
+                        <label for="reportDebtor">اختر المديون</label>
+                        <select id="reportDebtor"></select>
+                    </div>
+                    <button class="btn-primary" id="generateDebtorReport">
+                        <i data-lucide="download"></i>
+                        إنشاء الكشف
+                    </button>
+                </div>
+                <div class="card report-card">
+                    <div class="report-icon"><i data-lucide="alert-triangle"></i></div>
+                    <h3>تقرير الديون المتأخرة</h3>
+                    <p>قائمة بجميع الديون التي تجاوزت تاريخ الاستحقاق</p>
+                    <button class="btn-primary" id="generateOverdueReport">
+                        <i data-lucide="download"></i>
+                        إنشاء التقرير
+                    </button>
+                </div>
+                <div class="card report-card">
+                    <div class="report-icon"><i data-lucide="check-circle"></i></div>
+                    <h3>تقرير التحصيلات</h3>
+                    <p>ملخص بجميع السدادات والمبالغ المحصلة</p>
+                    <div class="form-group">
+                        <label for="collectionFrom">من تاريخ</label>
+                        <input type="date" id="collectionFrom">
+                    </div>
+                    <div class="form-group">
+                        <label for="collectionTo">إلى تاريخ</label>
+                        <input type="date" id="collectionTo">
+                    </div>
+                    <button class="btn-primary" id="generateCollectionReport">
+                        <i data-lucide="download"></i>
+                        إنشاء التقرير
+                    </button>
+                </div>
+                <div class="card report-card report-card-wide">
+                    <div class="report-icon"><i data-lucide="file-spreadsheet"></i></div>
+                    <h3>تصدير شامل</h3>
+                    <p>تصدير جميع البيانات بصيغ متعددة للاستخدام في البرامج الأخرى</p>
+                    <div class="export-buttons">
+                        <button class="btn-primary" id="exportFullExcel">
+                            <i data-lucide="file-spreadsheet"></i>
+                            Excel شامل
+                        </button>
+                        <button class="btn-secondary" id="exportFullCSV">
+                            <i data-lucide="file-text"></i>
+                            CSV
+                        </button>
+                        <button class="btn-info" id="exportFullPDF">
+                            <i data-lucide="file-text"></i>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============== عرض الأرشيف ============== -->
+        <div class="view-container" id="view-archive" role="tabpanel" hidden>
+            <section class="archive-section">
+                <div class="archive-header">
+                    <h2><i data-lucide="archive"></i> المديونون المؤرشفون</h2>
+                    <p>المديونون المكتمل سدادهم أو المؤجلون</p>
+                </div>
+                <div class="debtors-grid" id="archiveGrid"></div>
+                <div class="empty-state" id="archiveEmpty" hidden>
+                    <i data-lucide="archive"></i>
+                    <h3>لا يوجد مديونون مؤرشفون</h3>
+                    <p>سيظهر هنا المديونون المكتمل سدادهم أو المؤجلون</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============== عرض قائمة المديونين ============== -->
+        <div class="view-container" id="view-debtors-list" role="tabpanel" hidden>
+            <section class="debtors-list-section">
+                <div class="debtors-list-header">
+                    <div>
+                        <h2><i data-lucide="list-users"></i> قائمة المديونين</h2>
+                        <p>جميع المديونين مع أرقام هواتفهم ومواعيد الاتصال المتبادلة</p>
+                    </div>
+                    <div class="debtors-list-stats" id="debtorsListStats"></div>
+                </div>
+
+                <div class="debtors-list-toolbar">
+                    <div class="search-box">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="debtorsListSearch" placeholder="بحث بالاسم أو رقم الهاتف..." aria-label="بحث">
+                        <button class="clear-search" id="clearDebtorsListSearch" hidden aria-label="مسح البحث">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                    <div class="filter-tabs" id="debtorsListFilter" role="tablist">
+                        <button class="filter-tab active" data-dfilter="all">الكل</button>
+                        <button class="filter-tab" data-dfilter="upcoming">موعد قادم</button>
+                        <button class="filter-tab" data-dfilter="overdue">متأخر عن الاتصال</button>
+                        <button class="filter-tab" data-dfilter="no-phone">بدون هاتف</button>
+                    </div>
+                    <button class="btn-primary btn-sm" id="exportDebtorsListBtn">
+                        <i data-lucide="download"></i>
+                        تصدير القائمة
+                    </button>
+                </div>
+
+                <div class="debtors-table-wrapper">
+                    <table class="debtors-table" id="debtorsTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><i data-lucide="user"></i> الاسم</th>
+                                <th><i data-lucide="phone"></i> رقم الهاتف</th>
+                                <th><i data-lucide="tag"></i> التصنيف</th>
+                                <th><i data-lucide="phone-call"></i> تاريخ آخر اتصال</th>
+                                <th><i data-lucide="phone-outgoing"></i> موعد الاتصال القادم</th>
+                                <th><i data-lucide="dollar-sign"></i> المتبقي</th>
+                                <th><i data-lucide="file-text"></i> ملاحظات</th>
+                                <th><i data-lucide="settings"></i> إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="debtorsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="empty-state" id="debtorsListEmpty" hidden>
+                    <i data-lucide="users"></i>
+                    <h3>لا يوجد مديونون</h3>
+                    <p>ابدأ بإضافة مديون جديد من قسم الرئيسية</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ==================== نافذة الإعدادات ==================== -->
+    <div class="modal" id="settingsModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i data-lucide="settings"></i> الإعدادات</h2>
+                <button class="btn-close" data-close="settingsModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-tabs">
+                    <button class="settings-tab active" data-tab="general">عام</button>
+                    <button class="settings-tab" data-tab="appearance">المظهر</button>
+                    <button class="settings-tab" data-tab="security">الأمان</button>
+                    <button class="settings-tab" data-tab="data">البيانات</button>
+                    <button class="settings-tab" data-tab="about">حول</button>
+                </div>
+                <div class="settings-content">
+                    <div class="settings-pane active" data-pane="general">
+                        <div class="form-group">
+                            <label for="defaultCurrency"><i data-lucide="dollar-sign"></i> العملة الافتراضية</label>
+                            <select id="defaultCurrency">
+                                <option value="SAR">ريال سعودي (SAR)</option>
+                                <option value="AED">درهم إماراتي (AED)</option>
+                                <option value="KWD">دينار كويتي (KWD)</option>
+                                <option value="USD">دولار أمريكي (USD)</option>
+                                <option value="EUR">يورو (EUR)</option>
+                                <option value="EGP">جنيه مصري (EGP)</option>
+                                <option value="QAR">ريال قطري (QAR)</option>
+                                <option value="BHD">دينار بحريني (BHD)</option>
+                                <option value="OMR">ريال عماني (OMR)</option>
+                                <option value="JOD">دينار أردني (JOD)</option>
+                                <option value="IQD">دينار عراقي (IQD)</option>
+                                <option value="YER">ريال يمني (YER)</option>
+                                <option value="MAD">درهم مغربي (MAD)</option>
+                                <option value="DZD">دينار جزائري (DZD)</option>
+                                <option value="TND">دينار تونسي (TND)</option>
+                                <option value="LYD">دينار ليبي (LYD)</option>
+                                <option value="SDG">جنيه سوداني (SDG)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reminderDays"><i data-lucide="bell"></i> التذكير قبل الاستحقاق بـ (أيام)</label>
+                            <input type="number" id="reminderDays" min="0" max="90" value="7">
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsappCountryCode"><i data-lucide="phone"></i> كود الدولة لواتساب</label>
+                            <input type="text" id="whatsappCountryCode" placeholder="966" maxlength="4">
+                        </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="enableNotifications" checked>
+                                <span class="switch-slider"></span>
+                                <span>تفعيل التنبيهات داخل التطبيق</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="autoBackup">
+                                <span class="switch-slider"></span>
+                                <span>نسخ احتياطي تلقائي عند كل تغيير</span>
+                            </label>
+                        </div>
+                        <h3 style="margin: 1.5rem 0 0.5rem; font-size: 1rem;">إعدادات الفوائد والغرامات</h3>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="autoInterest">
+                                <span class="switch-slider"></span>
+                                <span>حساب فوائد تلقائية على الديون المتأخرة</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="interestRate"><i data-lucide="percent"></i> نسبة الفائدة السنوية (%)</label>
+                            <input type="number" id="interestRate" min="0" max="100" step="0.1" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="gracePeriodDays"><i data-lucide="shield"></i> فترة سماح قبل احتساب الفائدة (أيام)</label>
+                            <input type="number" id="gracePeriodDays" min="0" max="90" value="0">
+                        </div>
+                    </div>
+                    <div class="settings-pane" data-pane="appearance">
+                        <div class="form-group">
+                            <label><i data-lucide="palette"></i> المظهر</label>
+                            <div class="theme-options">
+                                <label class="theme-option">
+                                    <input type="radio" name="theme" value="light">
+                                    <span class="theme-preview light-preview">
+                                        <span class="preview-circle"></span>
+                                    </span>
+                                    <span>فاتح</span>
+                                </label>
+                                <label class="theme-option">
+                                    <input type="radio" name="theme" value="dark">
+                                    <span class="theme-preview dark-preview">
+                                        <span class="preview-circle"></span>
+                                    </span>
+                                    <span>داكن</span>
+                                </label>
+                                <label class="theme-option">
+                                    <input type="radio" name="theme" value="auto">
+                                    <span class="theme-preview auto-preview">
+                                        <span class="preview-circle"></span>
+                                    </span>
+                                    <span>تلقائي</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="accentColor"><i data-lucide="brush"></i> اللون الرئيسي</label>
+                            <div class="color-options">
+                                <button class="color-option" data-color="#6366f1" style="background:#6366f1"></button>
+                                <button class="color-option" data-color="#10b981" style="background:#10b981"></button>
+                                <button class="color-option" data-color="#3b82f6" style="background:#3b82f6"></button>
+                                <button class="color-option" data-color="#f59e0b" style="background:#f59e0b"></button>
+                                <button class="color-option" data-color="#ef4444" style="background:#ef4444"></button>
+                                <button class="color-option" data-color="#8b5cf6" style="background:#8b5cf6"></button>
+                                <button class="color-option" data-color="#ec4899" style="background:#ec4899"></button>
+                                <button class="color-option" data-color="#14b8a6" style="background:#14b8a6"></button>
+                                <button class="color-option" data-color="#f97316" style="background:#f97316"></button>
+                                <button class="color-option" data-color="#06b6d4" style="background:#06b6d4"></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i data-lucide="type"></i> حجم الخط</label>
+                            <div class="size-options">
+                                <button class="size-option" data-size="small">صغير</button>
+                                <button class="size-option active" data-size="medium">متوسط</button>
+                                <button class="size-option" data-size="large">كبير</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="compactMode">
+                                <span class="switch-slider"></span>
+                                <span>الوضع المضغوط (عرض أكثر من بيانات)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="settings-pane" data-pane="security">
+                        <div class="form-group">
+                            <label for="userName"><i data-lucide="user"></i> اسم المستخدم / الشركة</label>
+                            <input type="text" id="userName" placeholder="اسمك أو اسم نشاطك التجاري">
+                        </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="enablePassword">
+                                <span class="switch-slider"></span>
+                                <span>حماية التطبيق بكلمة مرور</span>
+                            </label>
+                        </div>
+                        <div class="form-group" id="passwordGroup" hidden>
+                            <label for="appPassword"><i data-lucide="lock"></i> كلمة المرور</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="appPassword" placeholder="أدخل كلمة مرور قوية">
+                                <button type="button" class="btn-icon-sm" id="togglePasswordVisibility" aria-label="إظهار">
+                                    <i data-lucide="eye"></i>
+                                </button>
+                            </div>
+                            <small class="form-hint">سيتم حفظ كلمة المرور مشفرة محلياً</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="enableEncryption">
+                                <span class="switch-slider"></span>
+                                <span>تشفير البيانات المخزنة</span>
+                            </label>
+                        </div>
+                        <button class="btn-danger" id="clearAllDataBtn">
+                            <i data-lucide="trash-2"></i>
+                            مسح جميع البيانات نهائياً
+                        </button>
+                    </div>
+                    <div class="settings-pane" data-pane="data">
+                        <div class="data-stats" id="dataStats"></div>
+                        <div class="form-group">
+                            <label><i data-lucide="hard-drive"></i> النسخ الاحتياطي</label>
+                            <div class="backup-buttons">
+                                <button class="btn-primary" id="backupNowBtn">
+                                    <i data-lucide="save"></i>
+                                    نسخ احتياطي الآن
+                                </button>
+                                <button class="btn-secondary" id="restoreBackupBtn">
+                                    <i data-lucide="upload"></i>
+                                    استعادة من نسخة
+                                </button>
+                                <input type="file" id="restoreFileInput" accept=".json" hidden>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="switch-label">
+                                <input type="checkbox" id="autoCloudBackup">
+                                <span class="switch-slider"></span>
+                                <span>النسخ الاحتياطي السحابي (Firebase)</span>
+                            </label>
+                        </div>
+                        <button class="btn-info" id="optimizeDataBtn">
+                            <i data-lucide="zap"></i>
+                            تحسين وضغط البيانات
+                        </button>
+                    </div>
+                    <div class="settings-pane" data-pane="about">
+                        <div class="about-section">
+                            <div class="about-logo">
+                                <i data-lucide="wallet"></i>
+                            </div>
+                            <h3>إدارة الديون Pro</h3>
+                            <p class="version-text">الإصدار <span id="appVersion">2.0.0</span></p>
+                            <p class="about-desc">تطبيق احترافي لإدارة وتتبع الديون المستحقة لك. يعمل بالكامل في المتصفح مع حماية كاملة لبياناتك.</p>
+                            <div class="about-features">
+                                <div class="feature-item">
+                                    <i data-lucide="shield"></i>
+                                    <span>خصوصية كاملة - بياناتك لا تخرج من جهازك</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i data-lucide="zap"></i>
+                                    <span>سريع وخفيف بدون سيرفر</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i data-lucide="smartphone"></i>
+                                    <span>يعمل على جميع الأجهزة</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i data-lucide="globe"></i>
+                                    <span>دعم كامل للغة العربية</span>
+                                </div>
+                            </div>
+                            <div class="about-shortcuts">
+                                <h4>اختصارات لوحة المفاتيح</h4>
+                                <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>N</kbd> <span>إضافة مديون جديد</span></div>
+                                <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>F</kbd> <span>بحث</span></div>
+                                <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>E</kbd> <span>تصدير</span></div>
+                                <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>D</kbd> <span>تبديل الوضع الداكن</span></div>
+                                <div class="shortcut-item"><kbd>Ctrl</kbd>+<kbd>1-3</kbd> <span>التبديل بين الأقسام</span></div>
+                                <div class="shortcut-item"><kbd>Esc</kbd> <span>إغلاق النوافذ</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="settingsModal">إلغاء</button>
+                    <button type="button" class="btn-primary" id="saveSettingsBtn">
+                        <i data-lucide="save"></i>
+                        حفظ الإعدادات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة إضافة مديون ==================== -->
+    <div class="modal" id="debtorModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="debtorModalTitle"><i data-lucide="user-plus"></i> إضافة مديون جديد</h2>
+                <button class="btn-close" data-close="debtorModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="debtorForm" class="modal-body" novalidate>
+                <input type="hidden" id="debtorId">
+                <input type="hidden" id="debtorArchived" value="false">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="debtorName"><i data-lucide="user"></i> الاسم</label>
+                        <input type="text" id="debtorName" placeholder="اسم المديون (اختياري)">
+                    </div>
+                    <div class="form-group">
+                        <label for="debtorPhone"><i data-lucide="phone"></i> رقم الهاتف</label>
+                        <input type="tel" id="debtorPhone" placeholder="مثال: 0501234567 (اختياري)">
+                    </div>
+                </div>
+
+                <!-- اختيار التاريخ التلقائي -->
+                <div class="form-group">
+                    <label><i data-lucide="calendar"></i> حدد تاريخ الدين</label>
+                    <div class="date-quick-pick">
+                        <button type="button" class="date-quick-btn active" data-date-mode="today" data-offset="0">اليوم</button>
+                        <button type="button" class="date-quick-btn" data-date-mode="today" data-offset="-7">قبل 7 أيام</button>
+                        <button type="button" class="date-quick-btn" data-date-mode="today" data-offset="-30">قبل شهر</button>
+                        <button type="button" class="date-quick-btn" data-date-mode="today" data-offset="+7">بعد أسبوع</button>
+                        <button type="button" class="date-quick-btn" data-date-mode="today" data-offset="+30">بعد شهر</button>
+                        <button type="button" class="date-quick-btn" data-date-mode="custom">تاريخ مخصص</button>
+                    </div>
+                    <input type="hidden" id="debtorDateMode" value="today">
+                    <input type="hidden" id="debtorDateOffset" value="0">
+                    <input type="date" id="debtorDate" style="margin-top:0.5rem">
+                </div>
+
+                <!-- منتجات الدين -->
+                <div class="form-group">
+                    <label class="products-label">
+                        <span><i data-lucide="shopping-bag"></i> المنتجات</span>
+                        <button type="button" class="btn-secondary btn-sm" id="addProductRowBtn">
+                            <i data-lucide="plus"></i> إضافة منتج
+                        </button>
+                    </label>
+                    <div class="products-list" id="debtorProductsList">
+                        <div class="empty-products">لم تُضف منتجات بعد</div>
+                    </div>
+                    <div class="products-total" id="debtorProductsTotal" hidden>
+                        المجموع: <strong>0</strong> <span class="currency-suffix"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="debtorLastContact"><i data-lucide="phone-call"></i> تاريخ آخر اتصال</label>
+                        <input type="date" id="debtorLastContact">
+                    </div>
+                    <div class="form-group">
+                        <label for="debtorNextCall"><i data-lucide="phone-outgoing"></i> موعد الاتصال القادم</label>
+                        <input type="date" id="debtorNextCall">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="debtorNotes"><i data-lucide="file-text"></i> ملاحظات</label>
+                    <textarea id="debtorNotes" rows="3" placeholder="أي تفاصيل إضافية (اختياري)"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="debtorModal">إلغاء</button>
+                    <button type="submit" class="btn-primary">
+                        <i data-lucide="save"></i>
+                        حفظ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة تفاصيل المديون ==================== -->
+    <div class="modal" id="debtorDetailsModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2><i data-lucide="user"></i> <span id="detailsDebtorName">تفاصيل المديون</span></h2>
+                <button class="btn-close" data-close="debtorDetailsModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="debtor-info-card">
+                    <div class="info-row">
+                        <span><i data-lucide="phone"></i> <span id="detailsDebtorPhone">-</span></span>
+                        <span><i data-lucide="mail"></i> <span id="detailsDebtorEmail">-</span></span>
+                        <span><i data-lucide="tag"></i> <span id="detailsDebtorCategory">-</span></span>
+                        <span><i data-lucide="file-text"></i> <span id="detailsDebtorNotes">-</span></span>
+                    </div>
+                    <div class="info-summary">
+                        <div class="summary-item">
+                            <small>إجمالي الديون</small>
+                            <strong id="detailsTotal">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <small>المسددة</small>
+                            <strong id="detailsPaid" class="text-success">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <small>المتبقية</small>
+                            <strong id="detailsRemaining" class="text-danger">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <small>المتأخرة</small>
+                            <strong id="detailsOverdue" class="text-danger">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <small>الفائدة</small>
+                            <strong id="detailsInterest" class="text-warning">0</strong>
+                        </div>
+                        <div class="summary-item">
+                            <small>درجة الثقة</small>
+                            <strong id="detailsTrustScore" class="trust-badge">-</strong>
+                        </div>
+                    </div>
+                    <div class="info-actions">
+                        <button class="btn-success btn-sm" id="addDebtBtn">
+                            <i data-lucide="plus-circle"></i> إضافة دين جديد
+                        </button>
+                        <button class="btn-primary btn-sm" id="addInstallmentBtn">
+                            <i data-lucide="calendar"></i> خطة أقساط
+                        </button>
+                        <button class="btn-info btn-sm" id="addCheckBtn">
+                            <i data-lucide="credit-card"></i> شيك
+                        </button>
+                        <button class="btn-warning btn-sm" id="addPromiseBtn">
+                            <i data-lucide="handshake"></i> وعد سداد
+                        </button>
+                        <button class="btn-secondary btn-sm" id="logCallBtn">
+                            <i data-lucide="phone-call"></i> تسجيل اتصال
+                        </button>
+                        <label class="btn-secondary btn-sm">
+                            <i data-lucide="paperclip"></i> مرفقات
+                            <input type="file" id="attachmentInput" multiple accept="image/*,.pdf,.doc,.docx" hidden>
+                        </label>
+                        <button class="btn-whatsapp btn-sm" id="whatsappReminderBtn">
+                            <i data-lucide="message-circle"></i> تذكير واتساب
+                        </button>
+                        <button class="btn-info btn-sm" id="printStatementBtn">
+                            <i data-lucide="printer"></i> طباعة كشف
+                        </button>
+                        <button class="btn-secondary btn-sm" id="editDebtorBtn">
+                            <i data-lucide="edit"></i> تعديل
+                        </button>
+                        <button class="btn-danger btn-sm" id="deleteDebtorBtn">
+                            <i data-lucide="trash-2"></i> حذف المديون
+                        </button>
+                    </div>
+                </div>
+
+                <div class="details-tabs">
+                    <button class="details-tab active" data-details-tab="transactions"><i data-lucide="list"></i> العمليات</button>
+                    <button class="details-tab" data-details-tab="installments"><i data-lucide="calendar"></i> الأقساط</button>
+                    <button class="details-tab" data-details-tab="checks"><i data-lucide="credit-card"></i> الشيكات</button>
+                    <button class="details-tab" data-details-tab="promises"><i data-lucide="handshake"></i> الوعود</button>
+                    <button class="details-tab" data-details-tab="calls"><i data-lucide="phone-call"></i> سجل الاتصالات</button>
+                    <button class="details-tab" data-details-tab="attachments"><i data-lucide="paperclip"></i> المرفقات</button>
+                </div>
+
+                <div class="details-tab-content active" data-details-content="transactions">
+                    <div class="transactions-list" id="transactionsList"></div>
+                </div>
+                <div class="details-tab-content" data-details-content="installments" hidden>
+                    <div id="installmentsList"></div>
+                </div>
+                <div class="details-tab-content" data-details-content="checks" hidden>
+                    <div id="checksList"></div>
+                </div>
+                <div class="details-tab-content" data-details-content="promises" hidden>
+                    <div id="promisesList"></div>
+                </div>
+                <div class="details-tab-content" data-details-content="calls" hidden>
+                    <div class="calls-header">
+                        <button class="btn-primary btn-sm" id="addCallLogBtn">
+                            <i data-lucide="plus"></i> تسجيل اتصال جديد
+                        </button>
+                    </div>
+                    <div id="callsList"></div>
+                </div>
+                <div class="details-tab-content" data-details-content="attachments" hidden>
+                    <div id="attachmentsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة الأقساط ==================== -->
+    <div class="modal" id="installmentModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="calendar"></i> خطة أقساط جديدة</h2>
+                <button class="btn-close" data-close="installmentModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="installmentForm" class="modal-body">
+                <input type="hidden" id="installmentDebtorId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="installmentAmount"><i data-lucide="dollar-sign"></i> المبلغ الإجمالي *</label>
+                        <input type="number" id="installmentAmount" required min="0.01" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="installmentCount"><i data-lucide="hash"></i> عدد الأقساط *</label>
+                        <input type="number" id="installmentCount" required min="1" max="120" value="3">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="installmentStartDate"><i data-lucide="calendar"></i> تاريخ البدء *</label>
+                        <input type="date" id="installmentStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="installmentFrequency"><i data-lucide="repeat"></i> التكرار</label>
+                        <select id="installmentFrequency">
+                            <option value="weekly">أسبوعي</option>
+                            <option value="biweekly">كل أسبوعين</option>
+                            <option value="monthly" selected>شهري</option>
+                            <option value="quarterly">ربع سنوي</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="installmentDescription"><i data-lucide="file-text"></i> الوصف</label>
+                    <textarea id="installmentDescription" rows="2" placeholder="مثال: قرض مقسط لشراء بضاعة"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="installmentModal">إلغاء</button>
+                    <button type="submit" class="btn-primary"><i data-lucide="save"></i> إنشاء الأقساط</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة الشيكات ==================== -->
+    <div class="modal" id="checkModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="credit-card"></i> إضافة شيك</h2>
+                <button class="btn-close" data-close="checkModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="checkForm" class="modal-body">
+                <input type="hidden" id="checkDebtorId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkAmount"><i data-lucide="dollar-sign"></i> المبلغ *</label>
+                        <input type="number" id="checkAmount" required min="0.01" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="checkNumber"><i data-lucide="hash"></i> رقم الشيك</label>
+                        <input type="text" id="checkNumber" placeholder="رقم الشيك">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkBank"><i data-lucide="building"></i> اسم البنك</label>
+                        <input type="text" id="checkBank" placeholder="مثال: البنك الأهلي">
+                    </div>
+                    <div class="form-group">
+                        <label for="checkDueDate"><i data-lucide="calendar"></i> تاريخ الاستحقاق *</label>
+                        <input type="date" id="checkDueDate" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="checkNotes"><i data-lucide="file-text"></i> ملاحظات</label>
+                    <textarea id="checkNotes" rows="2" placeholder="ملاحظات اختيارية..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="checkModal">إلغاء</button>
+                    <button type="submit" class="btn-primary"><i data-lucide="save"></i> إضافة الشيك</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة الوعود ==================== -->
+    <div class="modal" id="promiseModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="handshake"></i> وعد سداد</h2>
+                <button class="btn-close" data-close="promiseModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="promiseForm" class="modal-body">
+                <input type="hidden" id="promiseDebtorId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="promiseAmount"><i data-lucide="dollar-sign"></i> المبلغ *</label>
+                        <input type="number" id="promiseAmount" required min="0.01" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="promiseDate"><i data-lucide="calendar"></i> تاريخ الوعد *</label>
+                        <input type="date" id="promiseDate" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="promiseNotes"><i data-lucide="file-text"></i> ملاحظات</label>
+                    <textarea id="promiseNotes" rows="2" placeholder="تفاصيل الوعد..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="promiseModal">إلغاء</button>
+                    <button type="submit" class="btn-primary"><i data-lucide="save"></i> تسجيل الوعد</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة تسجيل اتصال ==================== -->
+    <div class="modal" id="callLogModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="phone-call"></i> تسجيل اتصال</h2>
+                <button class="btn-close" data-close="callLogModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="callLogForm" class="modal-body">
+                <input type="hidden" id="callLogDebtorId">
+                <div class="form-group">
+                    <label><i data-lucide="user"></i> المديون</label>
+                    <input type="text" id="callLogDebtorName" readonly>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="callLogDate"><i data-lucide="calendar"></i> تاريخ الاتصال *</label>
+                        <input type="date" id="callLogDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="callLogStatus"><i data-lucide="info"></i> النتيجة</label>
+                        <select id="callLogStatus">
+                            <option value="answered">تم الرد</option>
+                            <option value="no-answer">لم يرد</option>
+                            <option value="busy">مشغول</option>
+                            <option value="promise">وعد بالسداد</option>
+                            <option value="refused">رفض</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="callLogNextDate"><i data-lucide="phone-outgoing"></i> موعد الاتصال القادم</label>
+                    <input type="date" id="callLogNextDate">
+                </div>
+                <div class="form-group">
+                    <label for="callLogNotes"><i data-lucide="file-text"></i> ملاحظات المحادثة</label>
+                    <textarea id="callLogNotes" rows="3" placeholder="تفاصيل ما تم في المكالمة..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="callLogModal">إلغاء</button>
+                    <button type="submit" class="btn-primary"><i data-lucide="save"></i> حفظ الاتصال</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة أحداث اليوم ==================== -->
+    <div class="modal" id="eventsDayModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="calendar"></i> أحداث اليوم</h2>
+                <button class="btn-close" data-close="eventsDayModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="eventsDayContent"></div>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة إضافة دين ==================== -->
+    <div class="modal" id="debtModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="plus-circle"></i> إضافة دين جديد</h2>
+                <button class="btn-close" data-close="debtModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="debtForm" class="modal-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="debtAmount"><i data-lucide="dollar-sign"></i> المبلغ *</label>
+                        <input type="number" id="debtAmount" required min="0.01" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="debtCurrency"><i data-lucide="dollar-sign"></i> العملة</label>
+                        <select id="debtCurrency">
+                            <option value="">افتراضي</option>
+                            <option value="SAR">ريال سعودي</option>
+                            <option value="AED">درهم إماراتي</option>
+                            <option value="KWD">دينار كويتي</option>
+                            <option value="USD">دولار أمريكي</option>
+                            <option value="EUR">يورو</option>
+                            <option value="EGP">جنيه مصري</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="debtDate"><i data-lucide="calendar"></i> تاريخ الدين *</label>
+                        <input type="date" id="debtDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="debtDueDate"><i data-lucide="calendar-check"></i> تاريخ الاستحقاق المتوقع</label>
+                        <input type="date" id="debtDueDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="debtDescription"><i data-lucide="file-text"></i> الوصف / المواد والمشتريات *</label>
+                    <textarea id="debtDescription" required rows="3" placeholder="مثال: قرض نقدي، شراء بضاعة، خدمات..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="debtModal">إلغاء</button>
+                    <button type="submit" class="btn-primary">
+                        <i data-lucide="save"></i>
+                        إضافة الدين</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة تسجيل سداد ==================== -->
+    <div class="modal" id="paymentModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i data-lucide="check-circle"></i> تسجيل سداد</h2>
+                <button class="btn-close" data-close="paymentModal" aria-label="إغلاق">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="paymentForm" class="modal-body">
+                <div class="payment-info" id="paymentInfo"></div>
+                <div class="form-group">
+                    <label for="paymentAmount"><i data-lucide="dollar-sign"></i> المبلغ المدفوع *</label>
+                    <input type="number" id="paymentAmount" required min="0.01" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label for="paymentDate"><i data-lucide="calendar"></i> تاريخ السداد *</label>
+                    <input type="date" id="paymentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod"><i data-lucide="credit-card"></i> طريقة الدفع</label>
+                    <select id="paymentMethod">
+                        <option value="cash">نقدي</option>
+                        <option value="transfer">تحويل بنكي</option>
+                        <option value="check">شيك</option>
+                        <option value="card">بطاقة</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paymentNotes"><i data-lucide="file-text"></i> ملاحظات</label>
+                    <textarea id="paymentNotes" rows="2" placeholder="أي تفاصيل عن السداد..."></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="paymentModal">إلغاء</button>
+                    <button type="submit" class="btn-success">
+                        <i data-lucide="check"></i>
+                        تسجيل السداد
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة تأكيد الحذف ==================== -->
+    <div class="modal modal-confirm" id="confirmModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2><i data-lucide="alert-triangle"></i> تأكيد العملية</h2>
+            </div>
+            <div class="modal-body">
+                <p id="confirmMessage">هل أنت متأكد؟</p>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" data-close="confirmModal">إلغاء</button>
+                    <button type="button" class="btn-danger" id="confirmActionBtn">
+                        <i data-lucide="check"></i>
+                        تأكيد
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== نافذة قفل التطبيق ==================== -->
+    <div class="modal modal-lock" id="lockModal" hidden>
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-small">
+            <div class="lock-icon"><i data-lucide="lock"></i></div>
+            <h2>التطبيق مقفل</h2>
+            <p>أدخل كلمة المرور للمتابعة</p>
+            <div class="form-group">
+                <div class="password-input-wrapper">
+                    <input type="password" id="lockPassword" placeholder="كلمة المرور">
+                    <button type="button" class="btn-icon-sm" id="toggleLockPassword" aria-label="إظهار">
+                        <i data-lucide="eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button class="btn-primary" id="unlockBtn">
+                <i data-lucide="unlock"></i>
+                فتح التطبيق
+            </button>
+            <p class="lock-error" id="lockError" hidden>كلمة المرور غير صحيحة</p>
+        </div>
+    </div>
+
+    <!-- ==================== الإشعارات (Toasts) ==================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- زر الإضافة العائم (Mobile) -->
+    <button class="fab" id="fabBtn" aria-label="إضافة سريع">
+        <i data-lucide="plus"></i>
+    </button>
+
+    <script src="app.js" defer></script>
+    <script>
+        window.addEventListener('load', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>

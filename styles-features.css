@@ -1,0 +1,1049 @@
+/* ==================== ميزات جديدة - تنسيقات ==================== */
+
+/* شارة الثقة */
+.trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+}
+.trust-badge i { width: 14px; height: 14px; }
+.trust-high { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.trust-medium { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.trust-low { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+/* شارات إضافية للبطاقة */
+.debtor-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0.5rem 0;
+    padding: 0 0.25rem;
+}
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+}
+.badge i { width: 11px; height: 11px; }
+.badge-primary { background: rgba(99, 102, 241, 0.15); color: #6366f1; }
+.badge-success { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.badge-danger { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.badge-warning { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.badge-info { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+
+.debtor-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.debtor-meta i { width: 12px; height: 12px; }
+.debtor-category { display: inline-flex; align-items: center; gap: 3px; }
+
+.debtor-card {
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.debtor-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+}
+.debtor-card-header .debtor-info { flex: 1; min-width: 0; }
+.debtor-card-header .trust-badge { flex-shrink: 0; }
+
+.interest-note {
+    margin: 0.5rem 0;
+    padding: 6px 10px;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--warning);
+    border-radius: 8px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.interest-note i { width: 14px; height: 14px; }
+
+/* التحديد المتعدد */
+.debtor-select-checkbox {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 5;
+    accent-color: var(--primary);
+}
+.debtor-card.debtor-selected {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+}
+[dir="rtl"] .debtor-select-checkbox { left: auto; right: 10px; }
+
+.bulk-actions-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    background: var(--primary-light);
+    border-radius: var(--radius);
+    border: 1px solid var(--primary);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.bulk-actions-toolbar span { font-weight: 600; color: var(--primary); }
+.bulk-actions-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* الفلترة المتقدمة */
+.advanced-filters {
+    margin-bottom: 1rem;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+.advanced-filters details summary {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-hover);
+}
+.advanced-filters details summary:hover { background: var(--primary-light); }
+.advanced-filters details summary i { width: 18px; height: 18px; }
+.advanced-filters-content {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    align-items: end;
+}
+
+/* تبويبات تفاصيل المديون */
+.details-tabs {
+    display: flex;
+    gap: 4px;
+    margin: 1.5rem 0 0.5rem;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+.details-tab {
+    background: transparent;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+}
+.details-tab:hover { color: var(--primary); }
+.details-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+.details-tab i { width: 16px; height: 16px; }
+
+.details-tab-content { padding-top: 0.5rem; }
+
+/* الأقساط */
+.installment-card {
+    background: var(--bg-hover);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-right: 3px solid var(--primary);
+}
+
+[dir="rtl"] .installment-card {
+    border-right: 3px solid var(--primary);
+    border-left: none;
+}
+.installment-card.completed { border-right-color: var(--success); opacity: 0.85; }
+.installment-card.overdue { border-right-color: var(--danger); }
+
+.installment-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.installment-header strong { display: block; }
+.installment-header small { color: var(--text-secondary); font-size: 0.85rem; }
+
+.installment-progress {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+}
+.installment-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--info));
+    transition: width 0.4s;
+}
+
+.installment-schedule { display: flex; flex-direction: column; gap: 4px; }
+.installment-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto auto;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background: var(--bg-card);
+    font-size: 0.85rem;
+}
+.installment-row.paid { background: rgba(16, 185, 129, 0.1); }
+.installment-row.overdue { background: rgba(239, 68, 68, 0.1); }
+.installment-num {
+    width: 28px; height: 28px;
+    background: var(--primary-light); color: var(--primary);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.8rem;
+}
+.installment-amount { font-weight: 700; }
+.installment-status { font-size: 0.85rem; font-weight: 600; }
+
+/* الشيكات والوعود والمرفقات */
+.check-card, .promise-card, .attachment-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.75rem;
+    background: var(--bg-hover);
+    border-radius: var(--radius);
+    margin-bottom: 0.5rem;
+    border-right: 3px solid var(--info);
+}
+.check-card.status-cashed { border-right-color: var(--success); }
+.check-card.status-bounced { border-right-color: var(--danger); }
+.promise-card.status-kept { border-right-color: var(--success); }
+.promise-card.status-broken { border-right-color: var(--danger); }
+
+.check-icon, .promise-icon, .attachment-icon {
+    width: 36px; height: 36px;
+    background: var(--primary-light); color: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.check-icon i, .promise-icon i, .attachment-icon i { width: 18px; height: 18px; }
+
+.check-info, .promise-info, .attachment-info { flex: 1; min-width: 0; }
+.check-info strong, .promise-info strong, .attachment-info strong { display: block; font-size: 0.9rem; }
+.check-info small, .promise-info small, .attachment-info small { color: var(--text-secondary); font-size: 0.75rem; display: block; }
+
+.check-amount, .promise-amount { text-align: center; }
+.check-amount strong, .promise-amount strong { display: block; font-size: 0.95rem; }
+
+.check-status, .promise-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-top: 2px;
+}
+.status-pending { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+.status-cashed, .status-kept { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+.status-bounced, .status-broken { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+.status-cancelled { background: rgba(100, 116, 139, 0.15); color: #64748b; }
+
+.check-actions, .promise-actions {
+    display: flex; gap: 4px;
+}
+
+.attachment-card a, .attachment-card button { text-decoration: none; }
+
+/* قسم فارغ صغير */
+.empty-state-small {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--text-muted);
+}
+.empty-state-small i { width: 32px; height: 32px; opacity: 0.5; margin-bottom: 0.5rem; }
+.empty-state-small p { margin: 0; font-size: 0.85rem; }
+
+/* التقويم */
+#calendarContainer { padding: 0.5rem; }
+.calendar-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.calendar-header h3 { font-size: 1.2rem; font-weight: 700; margin: 0; }
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.calendar-day-name {
+    padding: 8px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: var(--bg-hover);
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+.calendar-cell {
+    aspect-ratio: 1;
+    background: var(--bg-card);
+    border-radius: 8px;
+    padding: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    min-height: 70px;
+}
+.calendar-cell.empty { background: transparent; border: none; cursor: default; }
+.calendar-cell:not(.empty):hover { background: var(--primary-light); transform: scale(1.05); }
+.calendar-cell.today { background: var(--primary-light); border-color: var(--primary); }
+.calendar-cell.has-events { background: rgba(59, 130, 246, 0.1); border-color: var(--info); }
+.calendar-cell.has-overdue { background: rgba(239, 68, 68, 0.1); border-color: var(--danger); }
+.day-number { font-weight: 700; font-size: 0.9rem; }
+.event-dot {
+    width: 6px; height: 6px;
+    background: var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+[dir="rtl"] .event-dot { left: auto; right: 4px; }
+.event-count {
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    font-size: 0.7rem;
+    color: var(--primary);
+    font-weight: 700;
+}
+[dir="rtl"] .event-count { right: auto; left: 4px; }
+
+/* تنبؤ التدفق النقدي */
+#cashFlowContainer { padding: 0.5rem 0; }
+.forecast-summary {
+    text-align: center;
+    padding: 1rem;
+    background: var(--primary-light);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+}
+.forecast-total { font-size: 1.1rem; }
+.forecast-total strong { color: var(--primary); font-size: 1.5rem; }
+
+.forecast-chart { display: flex; flex-direction: column; gap: 0.5rem; }
+.forecast-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 100px;
+    align-items: center;
+    gap: 8px;
+    padding: 0.5rem;
+    background: var(--bg-hover);
+    border-radius: 8px;
+}
+.forecast-label { font-size: 0.85rem; font-weight: 600; }
+.forecast-bar-wrap {
+    height: 18px;
+    background: var(--border);
+    border-radius: 9px;
+    overflow: hidden;
+}
+.forecast-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success), var(--primary));
+    transition: width 0.6s;
+}
+.forecast-value {
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--primary);
+}
+
+/* سجل النشاط */
+.activity-log {
+    max-height: 400px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.activity-item {
+    display: flex;
+    gap: 10px;
+    padding: 0.75rem;
+    background: var(--bg-hover);
+    border-radius: var(--radius);
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+.activity-item:hover { background: var(--primary-light); transform: translateX(-4px); }
+[dir="rtl"] .activity-item:hover { transform: translateX(4px); }
+.activity-icon {
+    width: 36px; height: 36px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.activity-icon i { width: 16px; height: 16px; }
+.activity-info { flex: 1; min-width: 0; }
+.activity-desc { font-weight: 600; font-size: 0.9rem; }
+.activity-time { color: var(--text-muted); font-size: 0.75rem; margin-top: 2px; }
+
+/* الأهداف */
+.goals-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+.goal-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+.goal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+.goal-header h4 { margin: 0; font-size: 1rem; }
+.goal-progress-circle {
+    width: 140px; height: 140px;
+    margin: 0 auto 0.75rem;
+    position: relative;
+}
+.goal-progress-circle svg {
+    width: 100%; height: 100%;
+    transform: rotate(0deg);
+}
+.goal-percent {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+.goal-info { color: var(--text-secondary); font-size: 0.9rem; }
+.goal-info strong { color: var(--primary); }
+
+/* مقارنة الفترات */
+#periodComparison { padding: 1rem; }
+.comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.comparison-col {
+    background: var(--bg-hover);
+    border-radius: var(--radius);
+    padding: 1rem;
+}
+.comparison-col h4 {
+    margin: 0 0 0.75rem;
+    color: var(--primary);
+    text-align: center;
+}
+.comparison-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+.comparison-row:last-child { border-bottom: none; }
+.comparison-trends {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    background: var(--bg-hover);
+}
+.trend i { width: 16px; height: 16px; }
+
+/* نافذة أحداث اليوم */
+.events-list-modal h3 {
+    margin: 0 0 1rem;
+    color: var(--primary);
+}
+.event-row {
+    padding: 0.75rem;
+    background: var(--bg-hover);
+    border-radius: var(--radius);
+    margin-bottom: 0.5rem;
+    border-right: 3px solid var(--primary);
+}
+[dir="rtl"] .event-row { border-right: 3px solid var(--primary); border-left: none; }
+
+/* تحسينات للمستودع */
+.summary-item .trust-badge {
+    margin-top: 0.25rem;
+    display: inline-flex;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .bulk-actions-toolbar { flex-direction: column; align-items: stretch; }
+    .bulk-actions-buttons { width: 100%; }
+    .bulk-actions-buttons button { flex: 1; }
+    .details-tab { padding: 0.5rem; font-size: 0.85rem; }
+    .details-tab span { display: none; }
+    .installment-row { grid-template-columns: 28px 1fr auto; }
+    .installment-row .installment-date { font-size: 0.75rem; }
+    .comparison-grid { grid-template-columns: 1fr; }
+    .forecast-row { grid-template-columns: 1fr; gap: 4px; }
+    .calendar-cell { min-height: 50px; }
+    .day-number { font-size: 0.75rem; }
+    .check-card, .promise-card, .attachment-card { flex-wrap: wrap; }
+}
+
+@media (max-width: 480px) {
+    .calendar-grid { gap: 2px; }
+    .calendar-cell { min-height: 40px; padding: 2px; }
+}
+
+/* ==================== قائمة المديونين التفصيلية ==================== */
+
+.debtors-list-section {
+    background: var(--card-bg, #fff);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.debtors-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+}
+
+.debtors-list-header h2 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.debtors-list-header h2 i { color: var(--primary, #6366f1); }
+.debtors-list-header p { margin: 0; color: var(--text-muted, #6b7280); font-size: 0.9rem; }
+
+.debtors-list-stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-pill {
+    background: var(--bg-soft, #f3f4f6);
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: var(--text, #111827);
+}
+
+.stat-pill.warning {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.debtors-list-toolbar {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.debtors-list-toolbar .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--bg-soft, #f3f4f6);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.debtors-list-toolbar .search-box i {
+    color: var(--text-muted, #6b7280);
+    margin-left: 0.5rem;
+}
+
+.debtors-list-toolbar .search-box input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: var(--text, #111827);
+    font-size: 0.9rem;
+}
+
+.debtors-list-toolbar .filter-tabs {
+    display: flex;
+    gap: 0.25rem;
+    background: var(--bg-soft, #f3f4f6);
+    padding: 0.25rem;
+    border-radius: 8px;
+}
+
+.debtors-list-toolbar .filter-tab {
+    padding: 0.4rem 0.75rem;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-muted, #6b7280);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.debtors-list-toolbar .filter-tab.active {
+    background: var(--primary, #6366f1);
+    color: #fff;
+}
+
+.debtors-list-toolbar .filter-tab:hover:not(.active) {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.debtors-table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.debtors-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    min-width: 950px;
+}
+
+.debtors-table thead {
+    background: var(--bg-soft, #f9fafb);
+}
+
+.debtors-table th {
+    text-align: right;
+    padding: 0.75rem;
+    font-weight: 600;
+    color: var(--text, #111827);
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+    white-space: nowrap;
+    font-size: 0.85rem;
+}
+
+.debtors-table th i {
+    vertical-align: middle;
+    margin-left: 4px;
+    width: 14px;
+    height: 14px;
+}
+
+.debtors-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-color, #e5e7eb);
+    color: var(--text, #111827);
+    vertical-align: middle;
+}
+
+.debtors-table tbody tr:hover { background: var(--bg-hover, #f9fafb); }
+.debtors-table tbody tr:last-child td { border-bottom: none; }
+
+.phone-link {
+    color: var(--primary, #6366f1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 500;
+}
+
+.phone-link:hover { text-decoration: underline; }
+.phone-link i { width: 14px; height: 14px; }
+
+.cat-pill {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    background: var(--bg-soft, #f3f4f6);
+    color: var(--text, #374151);
+}
+
+.cat-family { background: #fef3c7; color: #92400e; }
+.cat-friend { background: #dbeafe; color: #1e40af; }
+.cat-customer { background: #d1fae5; color: #065f46; }
+.cat-supplier { background: #ede9fe; color: #5b21b6; }
+.cat-employee { background: #fce7f3; color: #9d174d; }
+
+.call-overdue { color: #ef4444; font-weight: 600; }
+.call-overdue small { font-weight: 400; opacity: 0.8; }
+.call-today { color: #f59e0b; font-weight: 600; }
+.call-upcoming { color: #10b981; font-weight: 500; }
+
+.text-muted { color: var(--text-muted, #9ca3af); }
+.text-danger { color: #ef4444; }
+.text-success { color: #10b981; }
+.text-warning { color: #f59e0b; }
+
+.notes-cell {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-muted, #6b7280);
+    font-size: 0.85rem;
+}
+
+.row-actions {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: flex-start;
+}
+
+.row-actions .btn-icon-sm {
+    padding: 0.35rem;
+    background: var(--bg-soft, #f3f4f6);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.row-actions .btn-icon-sm:hover { background: var(--primary, #6366f1); color: #fff; }
+.row-actions .btn-icon-sm i { width: 14px; height: 14px; }
+.row-actions .btn-whatsapp-icon { background: #25d366; color: #fff; }
+.row-actions .btn-whatsapp-icon:hover { background: #1fb257; }
+
+.badge-mini {
+    display: inline-block;
+    padding: 1px 6px;
+    font-size: 0.7rem;
+    background: var(--bg-soft, #f3f4f6);
+    color: var(--text-muted, #6b7280);
+    border-radius: 4px;
+    margin-right: 4px;
+}
+
+/* سجل الاتصالات */
+.calls-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.call-log-item {
+    background: var(--bg-soft, #f9fafb);
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+.call-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.call-log-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.call-log-date i { width: 14px; height: 14px; }
+
+.call-log-status {
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    background: var(--bg-soft, #e5e7eb);
+}
+
+.call-log-status.status-answered { background: #d1fae5; color: #065f46; }
+.call-log-status.status-no-answer { background: #fef3c7; color: #92400e; }
+.call-log-status.status-busy { background: #dbeafe; color: #1e40af; }
+.call-log-status.status-promise { background: #ede9fe; color: #5b21b6; }
+.call-log-status.status-refused { background: #fee2e2; color: #991b1b; }
+
+.call-log-next {
+    font-size: 0.85rem;
+    color: var(--primary, #6366f1);
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.call-log-next i { width: 13px; height: 13px; }
+
+.call-log-notes {
+    font-size: 0.85rem;
+    color: var(--text, #374151);
+    line-height: 1.5;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--border-color, #e5e7eb);
+}
+
+.btn-delete-call {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted, #9ca3af);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.btn-delete-call:hover { color: #ef4444; background: rgba(239,68,68,0.1); }
+.btn-delete-call i { width: 14px; height: 14px; }
+
+.empty-state-small {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted, #9ca3af);
+}
+
+.empty-state-small i {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.5rem;
+    opacity: 0.4;
+}
+
+@media (max-width: 768px) {
+    .debtors-list-header { flex-direction: column; }
+    .debtors-list-stats { width: 100%; }
+    .debtors-table { font-size: 0.8rem; }
+    .debtors-table th, .debtors-table td { padding: 0.5rem; }
+}
+
+[data-theme="dark"] .debtors-table thead { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .debtors-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .cat-pill { background: rgba(255,255,255,0.06); color: #d1d5db; }
+[data-theme="dark"] .stat-pill { background: rgba(255,255,255,0.06); color: #d1d5db; }
+[data-theme="dark"] .call-log-item { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .row-actions .btn-icon-sm { background: rgba(255,255,255,0.06); }
+
+/* ==================== compact-mode + tab anchors ==================== */
+
+.tab-btn[href] {
+    text-decoration: none;
+    color: inherit;
+}
+
+.compact-mode .debtor-card { padding: 0.75rem; }
+.compact-mode .stat-card { padding: 0.75rem; }
+.compact-mode .card { padding: 0.75rem; }
+.compact-mode .debtors-table th,
+.compact-mode .debtors-table td { padding: 0.5rem 0.4rem; }
+
+/* ==================== التاريخ السريع ==================== */
+
+.date-quick-pick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.date-quick-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    border: 1px solid var(--border-color, #e5e7eb);
+    background: var(--bg-soft, #f3f4f6);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text, #374151);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    font-family: inherit;
+}
+
+.date-quick-btn:hover {
+    background: var(--primary-light, #eef2ff);
+    border-color: var(--primary, #6366f1);
+}
+
+.date-quick-btn.active {
+    background: var(--primary, #6366f1);
+    color: #fff;
+    border-color: var(--primary, #6366f1);
+}
+
+/* ==================== منتجات الدين ==================== */
+
+.products-label {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem !important;
+}
+
+.products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    background: var(--bg-soft, #f9fafb);
+    border: 1px dashed var(--border-color, #e5e7eb);
+    border-radius: 8px;
+    padding: 0.5rem;
+    min-height: 60px;
+}
+
+.empty-products {
+    text-align: center;
+    color: var(--text-muted, #9ca3af);
+    font-size: 0.85rem;
+    padding: 0.75rem;
+    font-style: italic;
+}
+
+.product-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.7fr 0.9fr auto;
+    gap: 0.4rem;
+    align-items: center;
+    background: var(--card-bg, #fff);
+    padding: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.product-row input {
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--border-color, #e5e7eb);
+    border-radius: 6px;
+    background: var(--card-bg, #fff);
+    color: var(--text, #111827);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.15s;
+    min-width: 0;
+}
+
+.product-row input:focus {
+    border-color: var(--primary, #6366f1);
+}
+
+.product-row .p-subtotal {
+    font-weight: 600;
+    color: var(--primary, #6366f1);
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.4rem;
+    background: var(--bg-soft, #f3f4f6);
+    border-radius: 6px;
+}
+
+.product-row .p-del {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border: none;
+    padding: 0.4rem;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-row .p-del:hover { background: #ef4444; color: #fff; }
+.product-row .p-del i { width: 14px; height: 14px; }
+
+.products-total {
+    margin-top: 0.5rem;
+    padding: 0.6rem 0.8rem;
+    background: linear-gradient(135deg, var(--primary-light, #eef2ff), rgba(99,102,241,0.05));
+    border-radius: 8px;
+    text-align: left;
+    font-size: 0.95rem;
+    color: var(--text, #111827);
+}
+
+.products-total strong {
+    color: var(--primary, #6366f1);
+    font-size: 1.1rem;
+    margin: 0 4px;
+}
+
+@media (max-width: 600px) {
+    .product-row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "name name" "price qty" "sub del";
+    }
+    .product-row .p-name { grid-area: name; }
+    .product-row .p-price { grid-area: price; }
+    .product-row .p-qty { grid-area: qty; }
+    .product-row .p-subtotal { grid-area: sub; }
+    .product-row .p-del { grid-area: del; }
+}
+
+[data-theme="dark"] .product-row { background: rgba(255,255,255,0.04); }
+[data-theme="dark"] .product-row input { background: rgba(255,255,255,0.04); color: #f1f5f9; }
+[data-theme="dark"] .product-row .p-subtotal { background: rgba(255,255,255,0.06); }
+[data-theme="dark"] .date-quick-btn { background: rgba(255,255,255,0.06); color: #d1d5db; }
+[data-theme="dark"] .products-list { background: rgba(255,255,255,0.02); }
+[data-theme="dark"] .products-total { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(99,102,241,0.05)); }
