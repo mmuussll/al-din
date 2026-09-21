@@ -3523,8 +3523,9 @@ function bindEvents() {
 
     document.querySelectorAll('.color-option').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            document.querySelectorAll('.color-option').forEach(function(b) { b.classList.remove('active'); });
+            document.querySelectorAll('.color-option').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-checked', 'false'); });
             btn.classList.add('active');
+            btn.setAttribute('aria-checked', 'true');
             const root = document.documentElement;
             root.style.setProperty('--primary', btn.dataset.color);
             root.style.setProperty('--primary-hover', shadeColor(btn.dataset.color, -10));
@@ -3533,8 +3534,9 @@ function bindEvents() {
 
     document.querySelectorAll('.size-option').forEach(function(btn) {
         btn.addEventListener('click', function() {
-            document.querySelectorAll('.size-option').forEach(function(b) { b.classList.remove('active'); });
+            document.querySelectorAll('.size-option').forEach(function(b) { b.classList.remove('active'); b.setAttribute('aria-checked', 'false'); });
             btn.classList.add('active');
+            btn.setAttribute('aria-checked', 'true');
             const root = document.documentElement;
             const sizes = { small: '14px', medium: '15px', large: '17px' };
             root.style.setProperty('--base-font-size', sizes[btn.dataset.size] || '15px');
