@@ -92,9 +92,10 @@ function cleanPhoneForWhatsApp(phone) {
     return cleaned;
 }
 
-function safeCreateIcons() {
+function safeCreateIcons(scope) {
     if (typeof lucide !== 'undefined') {
-        try { lucide.createIcons(); } catch (e) { console.warn('lucide error', e); }
+        try { lucide.createIcons(scope ? { nameAttr: 'data-lucide', attrs: {}, root: scope } : undefined); }
+        catch (e) { console.warn('lucide error', e); }
     }
 }
 
@@ -124,19 +125,46 @@ function showToast(message, type) {
     }, 3500);
 }
 
+let _modalLastFocus = null;
+let _modalKeyHandler = null;
+
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.hidden = false;
-        document.body.style.overflow = 'hidden';
+    if (!modal) return;
+    _modalLastFocus = document.activeElement;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    const first = modal.querySelector('input:not([type="hidden"]), select, textarea, button:not([data-modal-close])');
+    if (first) setTimeout(function() { first.focus(); }, 50);
+    if (!_modalKeyHandler) {
+        _modalKeyHandler = function(e) {
+            if (e.key !== 'Tab') return;
+            const open = document.querySelectorAll('.modal:not([hidden])');
+            if (!open.length) return;
+            const modal = open[open.length - 1];
+            const focusables = modal.querySelectorAll('input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])');
+            if (!focusables.length) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        };
+        document.addEventListener('keydown', _modalKeyHandler, true);
     }
 }
 
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
-    if (modal) {
-        modal.hidden = true;
+    if (!modal) return;
+    modal.hidden = true;
+    const stillOpen = document.querySelectorAll('.modal:not([hidden])');
+    if (!stillOpen.length) {
         document.body.style.overflow = '';
+        if (_modalLastFocus && _modalLastFocus.focus) _modalLastFocus.focus();
+        if (_modalKeyHandler) {
+            document.removeEventListener('keydown', _modalKeyHandler, true);
+            _modalKeyHandler = null;
+        }
     }
 }
 
@@ -990,6 +1018,7 @@ const _totalsCache = new Map();
 function invalidateTotalsCache(debtorId) {
     if (debtorId) _totalsCache.delete(debtorId);
     else _totalsCache.clear();
+    _globalStatsCache = null;
 }
 
 function getDebtorTotals(debtor) {
@@ -1125,7 +1154,8 @@ function switchView(viewName) {
     if (viewName === 'analytics') renderAnalytics();
     else if (viewName === 'archive') renderArchive();
     else if (viewName === 'debtors-list') renderDebtorsList();
-    safeCreateIcons();
+    if (view) safeCreateIcons(view);
+    else safeCreateIcons();
 }
 
 function renderArchive() {
@@ -2319,7 +2349,11 @@ function renderKPIs() {
         '<div class="kpi-item"><div class="kpi-label">أقساط نشطة</div><div class="kpi-value">' + formatCurrency(stats.totalInstallments) + '</div><div class="kpi-trend">' + stats.activeInstallments + ' خطة</div></div>';
 }
 
+let _globalStatsCache = null;
+function invalidateGlobalStatsCache() { _globalStatsCache = null; }
+
 function getGlobalStats() {
+    if (_globalStatsCache) return _globalStatsCache;
     let totalRequired = 0;
     let totalPaid = 0;
     let activeDebtors = 0;
@@ -2366,7 +2400,7 @@ function getGlobalStats() {
         }
     }
 
-    return {
+    _globalStatsCache = {
         totalRequired: totalRequired,
         totalPaid: totalPaid,
         totalRemaining: totalRequired - totalPaid,
@@ -2380,6 +2414,7 @@ function getGlobalStats() {
         activeInstallments: activeInstallments,
         progress: totalRequired > 0 ? Math.round((totalPaid / totalRequired) * 100) : 0
     };
+    return _globalStatsCache;
 }
 
 // ==================== التقويم ====================
@@ -3276,9 +3311,8 @@ function bindEvents() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             document.querySelectorAll('.modal:not([hidden])').forEach(function(modal) {
-                modal.hidden = true;
+                closeModal(modal.id);
             });
-            document.body.style.overflow = '';
         }
         if (e.ctrlKey || e.metaKey) {
             if (e.key === 'n' || e.key === 'N') {
@@ -3655,6 +3689,13 @@ function bindEvents() {
 // ==================== تشغيل أولي ====================
 
 document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.modal').forEach(function(modal) {
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        const header = modal.querySelector('.modal-header h2, h1, h3');
+        if (header && !header.id) header.id = modal.id + '-title';
+        if (header) modal.setAttribute('aria-labelledby', header.id);
+    });
     loadTheme();
     loadSettings();
     loadActivity();
