@@ -3,3 +3,5 @@ firebase-debug.log
 .DS_Store
 Thumbs.db
 *.log
+commit-msg.txt
+audit*.js
