@@ -260,7 +260,7 @@
                     <summary><i data-lucide="sliders-horizontal"></i> فلترة متقدمة</summary>
                     <div class="advanced-filters-content">
                         <div class="form-group">
-                            <label>التصنيف</label>
+                            <label for="filterCategory">التصنيف</label>
                             <select id="filterCategory">
                                 <option value="all">الكل</option>
                                 <option value="general">عام</option>
@@ -273,19 +273,19 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>من مبلغ</label>
+                            <label for="filterMinAmount">من مبلغ</label>
                             <input type="number" id="filterMinAmount" placeholder="0" min="0">
                         </div>
                         <div class="form-group">
-                            <label>إلى مبلغ</label>
+                            <label for="filterMaxAmount">إلى مبلغ</label>
                             <input type="number" id="filterMaxAmount" placeholder="∞" min="0">
                         </div>
                         <div class="form-group">
-                            <label>من تاريخ</label>
+                            <label for="filterDateFrom">من تاريخ</label>
                             <input type="date" id="filterDateFrom">
                         </div>
                         <div class="form-group">
-                            <label>إلى تاريخ</label>
+                            <label for="filterDateTo">إلى تاريخ</label>
                             <input type="date" id="filterDateTo">
                         </div>
                         <button class="btn-secondary" id="resetFilters"><i data-lucide="refresh-cw"></i> إعادة تعيين</button>
@@ -602,30 +602,32 @@
                     </div>
                     <div class="settings-pane" data-pane="appearance">
                         <div class="form-group">
-                            <label><i data-lucide="palette"></i> المظهر</label>
-                            <div class="theme-options">
-                                <label class="theme-option">
-                                    <input type="radio" name="theme" value="light">
-                                    <span class="theme-preview light-preview">
-                                        <span class="preview-circle"></span>
-                                    </span>
-                                    <span>فاتح</span>
-                                </label>
-                                <label class="theme-option">
-                                    <input type="radio" name="theme" value="dark">
-                                    <span class="theme-preview dark-preview">
-                                        <span class="preview-circle"></span>
-                                    </span>
-                                    <span>داكن</span>
-                                </label>
-                                <label class="theme-option">
-                                    <input type="radio" name="theme" value="auto">
-                                    <span class="theme-preview auto-preview">
-                                        <span class="preview-circle"></span>
-                                    </span>
-                                    <span>تلقائي</span>
-                                </label>
-                            </div>
+                            <fieldset class="theme-fieldset">
+                                <legend><i data-lucide="palette"></i> المظهر</legend>
+                                <div class="theme-options">
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="light">
+                                        <span class="theme-preview light-preview">
+                                            <span class="preview-circle"></span>
+                                        </span>
+                                        <span>فاتح</span>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="dark">
+                                        <span class="theme-preview dark-preview">
+                                            <span class="preview-circle"></span>
+                                        </span>
+                                        <span>داكن</span>
+                                    </label>
+                                    <label class="theme-option">
+                                        <input type="radio" name="theme" value="auto">
+                                        <span class="theme-preview auto-preview">
+                                            <span class="preview-circle"></span>
+                                        </span>
+                                        <span>تلقائي</span>
+                                    </label>
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="form-group">
                             <label for="accentColor"><i data-lucide="brush"></i> اللون الرئيسي</label>
@@ -643,12 +645,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label><i data-lucide="type"></i> حجم الخط</label>
-                            <div class="size-options">
-                                <button class="size-option" data-size="small">صغير</button>
-                                <button class="size-option active" data-size="medium">متوسط</button>
-                                <button class="size-option" data-size="large">كبير</button>
-                            </div>
+                            <fieldset class="size-fieldset">
+                                <legend><i data-lucide="type"></i> حجم الخط</legend>
+                                <div class="size-options" role="radiogroup" aria-label="حجم الخط">
+                                    <button type="button" class="size-option" data-size="small" role="radio" aria-checked="false">صغير</button>
+                                    <button type="button" class="size-option active" data-size="medium" role="radio" aria-checked="true">متوسط</button>
+                                    <button type="button" class="size-option" data-size="large" role="radio" aria-checked="false">كبير</button>
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="form-group">
                             <label class="switch-label">
@@ -659,7 +663,7 @@
                         </div>
                     </div>
                     <div class="settings-pane" data-pane="security">
-                        <form id="securityForm" onsubmit="return false;">
+                        <form id="securityForm">
                             <div class="form-group">
                                 <label for="userName"><i data-lucide="user"></i> اسم المستخدم / الشركة</label>
                                 <input type="text" id="userName" placeholder="اسمك أو اسم نشاطك التجاري">
@@ -696,8 +700,9 @@
                     <div class="settings-pane" data-pane="data">
                         <div class="data-stats" id="dataStats"></div>
                         <div class="form-group">
-                            <label><i data-lucide="hard-drive"></i> النسخ الاحتياطي</label>
-                            <div class="backup-buttons">
+                            <fieldset class="backup-fieldset">
+                                <legend><i data-lucide="hard-drive"></i> النسخ الاحتياطي</legend>
+                                <div class="backup-buttons">
                                 <button class="btn-primary" id="backupNowBtn">
                                     <i data-lucide="save"></i>
                                     نسخ احتياطي الآن
@@ -707,7 +712,8 @@
                                     استعادة من نسخة
                                 </button>
                                 <input type="file" id="restoreFileInput" accept=".json" hidden>
-                            </div>
+                                </div>
+                            </fieldset>
                         </div>
                         <div class="form-group">
                             <label class="switch-label">
@@ -796,8 +802,8 @@
 
                 <!-- اختيار التاريخ التلقائي -->
                 <div class="form-group">
-                    <label><i data-lucide="calendar"></i> حدد تاريخ الدين</label>
-                    <div class="date-quick-pick">
+                    <label id="dateModeLabel"><i data-lucide="calendar"></i> حدد تاريخ الدين</label>
+                    <div class="date-quick-pick" role="group" aria-labelledby="dateModeLabel">
                         <button type="button" class="date-quick-btn active" data-date-mode="today" data-offset="0">اليوم</button>
                         <button type="button" class="date-quick-btn" data-date-mode="today" data-offset="-7">قبل 7 أيام</button>
                         <button type="button" class="date-quick-btn" data-date-mode="today" data-offset="-30">قبل شهر</button>
@@ -1107,7 +1113,7 @@
             <form id="callLogForm" class="modal-body">
                 <input type="hidden" id="callLogDebtorId">
                 <div class="form-group">
-                    <label><i data-lucide="user"></i> المديون</label>
+                    <label for="callLogDebtorName"><i data-lucide="user"></i> المديون</label>
                     <input type="text" id="callLogDebtorName" readonly>
                 </div>
                 <div class="form-row">
@@ -1281,7 +1287,7 @@
             <div class="lock-icon"><i data-lucide="lock"></i></div>
             <h2>التطبيق مقفل</h2>
             <p>أدخل كلمة المرور للمتابعة</p>
-            <form id="lockForm" onsubmit="return false;">
+            <form id="lockForm">
                 <div class="form-group">
                     <div class="password-input-wrapper">
                         <input type="password" id="lockPassword" placeholder="كلمة المرور" autocomplete="current-password">

@@ -1815,28 +1815,15 @@ function renderDebtorDetails(debtor) {
     const interestEl = document.getElementById('detailsInterest');
     if (interestEl) interestEl.textContent = formatCurrency(totals.interest);
 
-    document.getElementById('addDebtBtn').onclick = function() { openDebtModal(debtor.id); };
-    document.getElementById('whatsappReminderBtn').onclick = function() { sendWhatsAppReminder(debtor.id); };
-    document.getElementById('printStatementBtn').onclick = function() { printStatement(debtor.id); };
-    document.getElementById('deleteDebtorBtn').onclick = function() { deleteDebtor(debtor.id); };
-
-    document.getElementById('addInstallmentBtn').onclick = function() {
-        document.getElementById('installmentDebtorId').value = debtor.id;
-        document.getElementById('installmentStartDate').value = getTodayDate();
-        openModal('installmentModal');
-    };
-    document.getElementById('addCheckBtn').onclick = function() {
-        document.getElementById('checkDebtorId').value = debtor.id;
-        document.getElementById('checkDueDate').value = getTodayDate();
-        openModal('checkModal');
-    };
-    document.getElementById('addPromiseBtn').onclick = function() {
-        document.getElementById('promiseDebtorId').value = debtor.id;
-        document.getElementById('promiseDate').value = getTodayDate();
-        openModal('promiseModal');
-    };
-    document.getElementById('logCallBtn').onclick = function() { openCallLogModal(debtor.id); };
-    document.getElementById('addCallLogBtn').onclick = function() { openCallLogModal(debtor.id); };
+    document.getElementById('addDebtBtn').dataset.debtorId = debtor.id;
+    document.getElementById('whatsappReminderBtn').dataset.debtorId = debtor.id;
+    document.getElementById('printStatementBtn').dataset.debtorId = debtor.id;
+    document.getElementById('deleteDebtorBtn').dataset.debtorId = debtor.id;
+    document.getElementById('addInstallmentBtn').dataset.debtorId = debtor.id;
+    document.getElementById('addCheckBtn').dataset.debtorId = debtor.id;
+    document.getElementById('addPromiseBtn').dataset.debtorId = debtor.id;
+    document.getElementById('logCallBtn').dataset.debtorId = debtor.id;
+    document.getElementById('addCallLogBtn').dataset.debtorId = debtor.id;
 
     renderTransactions(debtor);
     renderInstallments(debtor);
@@ -2420,6 +2407,7 @@ function renderActivityLog() {
     }
 
     list.innerHTML = '';
+    const fragment = document.createDocumentFragment();
     APP.activityLog.slice(0, 50).forEach(function(entry) {
         const item = document.createElement('div');
         item.className = 'activity-item';
@@ -2428,8 +2416,9 @@ function renderActivityLog() {
         item.innerHTML =
             '<div class="activity-icon"><i data-lucide="' + (iconMap[entry.type] || 'activity') + '"></i></div>' +
             '<div class="activity-info"><div class="activity-desc">' + escapeHtml(entry.description) + '</div><div class="activity-time">' + timeStr + '</div></div>';
-        list.appendChild(item);
+        fragment.appendChild(item);
     });
+    list.appendChild(fragment);
     safeCreateIcons();
 }
 
@@ -2523,7 +2512,8 @@ function renderGoals() {
         '</div>';
 
     container.querySelectorAll('[data-action="edit-goal"]').forEach(function(btn) {
-        btn.onclick = function() {
+        if (btn._goalHandler) return;
+        btn._goalHandler = function() {
             const type = this.dataset.type;
             const newVal = prompt('أدخل هدف ' + (type === 'monthly' ? 'الشهر' : 'السنة') + ':', APP.goals[type]);
             if (newVal !== null) {
@@ -2532,6 +2522,7 @@ function renderGoals() {
                 renderGoals();
             }
         };
+        btn.addEventListener('click', btn._goalHandler);
     });
     safeCreateIcons();
 }
@@ -2654,7 +2645,6 @@ function renderTransactions(debtor) {
     });
 
     list.innerHTML = '';
-
     const fragment = document.createDocumentFragment();
 
     for (let i = 0; i < sorted.length; i++) {
@@ -2728,7 +2718,6 @@ function renderTransactions(debtor) {
         fragment.appendChild(item);
     }
 
-    list.innerHTML = '';
     list.appendChild(fragment);
     safeCreateIcons();
 }
@@ -3236,6 +3225,12 @@ function bindEvents() {
     document.getElementById('bulkExport')?.addEventListener('click', bulkExport);
     document.getElementById('clearSelection')?.addEventListener('click', clearSelection);
 
+    document.getElementById('securityForm')?.addEventListener('submit', function(e) { e.preventDefault(); });
+    document.getElementById('lockForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        document.getElementById('unlockBtn')?.click();
+    });
+
     const emptyStateAddBtn = document.getElementById('emptyStateAddBtn');
     if (emptyStateAddBtn && addBtn) {
         emptyStateAddBtn.addEventListener('click', function() { addBtn.click(); });
@@ -3396,6 +3391,35 @@ function bindEvents() {
         else if (btn.dataset.action === 'unarchive') {
             const d = APP.debtors.find(function(x) { return x.id === id; });
             if (d) { d.archived = false; saveData(); renderAll(); switchView('archive'); }
+        }
+    });
+
+    document.getElementById('detailsModal')?.addEventListener('click', function(e) {
+        const btn = e.target.closest('button');
+        if (!btn || !btn.id || !btn.dataset.debtorId) return;
+        const id = btn.dataset.debtorId;
+        switch (btn.id) {
+            case 'addDebtBtn': openDebtModal(id); break;
+            case 'whatsappReminderBtn': sendWhatsAppReminder(id); break;
+            case 'printStatementBtn': printStatement(id); break;
+            case 'deleteDebtorBtn': deleteDebtor(id); break;
+            case 'logCallBtn':
+            case 'addCallLogBtn': openCallLogModal(id); break;
+            case 'addInstallmentBtn':
+                document.getElementById('installmentDebtorId').value = id;
+                document.getElementById('installmentStartDate').value = getTodayDate();
+                openModal('installmentModal');
+                break;
+            case 'addCheckBtn':
+                document.getElementById('checkDebtorId').value = id;
+                document.getElementById('checkDueDate').value = getTodayDate();
+                openModal('checkModal');
+                break;
+            case 'addPromiseBtn':
+                document.getElementById('promiseDebtorId').value = id;
+                document.getElementById('promiseDate').value = getTodayDate();
+                openModal('promiseModal');
+                break;
         }
     });
 

@@ -1,0 +1,20 @@
+Major cleanup: memory leaks, accessibility, security headers
+
+HTML / accessibility:
+- Replace 5 unlabeled labels with proper for= / fieldset+legend
+- Remove inline onsubmit=return false handlers (use event listeners)
+- Wrap security pane + lock screen in <form> with proper submit handling
+- Use DocumentFragment in renderActivity for batch DOM insertion
+- Fix double innerHTML='' in renderTransactions
+
+JS / memory:
+- Replace .onclick in renderDebtorDetails with data-debtor-id + event delegation on #detailsModal
+- Guard goal edit handler to prevent duplicate listeners on re-render
+- Add preventDefault handlers for #securityForm and #lockForm
+
+Security / headers (netlify.toml):
+- Add strict Content-Security-Policy (allow self, inline for legacy libs, Firebase)
+- Add Permissions-Policy (deny camera/mic/geo/payment)
+- Add JS cache-control headers
+
+Co-authored-by: CommandCodeBot <noreply@commandcode.ai>
